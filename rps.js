@@ -151,7 +151,7 @@ function next(){
 }
 
 function compplay(){
-	var choice = Math.floor(Math,random() * 2);
+	var choice = Math.floor(Math.random() * 2);
 	if (choice == 0) compplayrand();
 	else compplaysmart();
 }

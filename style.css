@@ -1,5 +1,249 @@
-h1 {
-	color: blue
+body {
+	font-family: 'Press Start 2P';
+	margin: 0;
+	padding: 0;
+}
+
+#container {
+	border: 3px solid black;
+	width: 1100px;
+	height: 600px;
+	margin: 40px auto 40px auto;
+ 	position: relative;
+ 	overflow: hidden;
+}
+
+.debug #container {
+	background: red;
+}
+
+h1{
+	text-align: center;
+	font-size: 24px;
+}
+
+#humanscorecontainer{
+	width: 300px;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	text-align: center;
+	line-height: 30px;
+}
+
+.debug #humanscorecontainer{
+	background: blue;
+}
+
+#countdown {
+	font-size: 120px;
+	position: absolute;
+	width: 500px;
+	top: 170px;
+	left: 300px;
+	text-align: center;
+}
+
+#endgame {
+	font-size: 80px;
+	position: absolute;
+	width: 800px;
+	top: 190px;
+	left: 200px;
+	text-align: center;
+}
+
+.debug #countdown {
+	background: pink;
+}
+
+#compscorecontainer{
+	width: 300px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	text-align: center;
+	line-height: 30px;
+}
+
+.debug #compscorecontainer{
+	background: blue;
+}
+
+@keyframes compplayframestielose {
+	from {
+		left: 1100px;
+	}
+	75%{
+		left: 535px;
+		opacity: 1;
+	}
+	to {
+		left: 700px;
+		opacity: 0;
+	}
+}
+
+@keyframes compplayframeswin {
+	from {
+		left: 1100px;
+	}
+	75% {
+		left: 535px;
+		transform: scale(1);
+	}
+	to {
+		left: 394px;
+		transform: scale(1.2);
+	}
+}
+
+#compplay {
+	position: absolute;
+	width: 433px;
+	height: 400px;
+	background-size: 433px 400px;
+	top: 60px;
+	left: 1100px;
+}
+
+#compplay.rock.win, #compplay.paper.win, #compplay.scissors.win {
+	animation-name: compplayframeswin;
+}
+
+#compplay.rock.lose, #compplay.paper.lose, #compplay.scissors.lose, 
+#compplay.rock.tie, #compplay.paper.tie, #compplay.scissors.tie {
+	animation-name: compplayframestielose;
+}
+
+#compplay.rock, #compplay.paper, #compplay.scissors{
+	animation-duration: 1.5s;
+	animation-timing-function: ease-in;
+	animation-fill-mode: forwards;
+}
+
+#compplay.rock, #humanplay.rock {
+	background-image: url("images/rock.png");
+}
+
+#compplay.paper, #humanplay.paper {
+	background-image: url("images/paper.png");
+}
+
+#compplay.scissors, #humanplay.scissors {
+	background-image: url("images/scissors.png");
+}
+
+@keyframes humanplayframestielose {
+	from {
+		left: -433px;
+	}
+	75% {
+		left: 122px;
+		opacity: 1;
+	}
+	to {
+		left: -43px;
+		opacity: 0;
+	}
+}
+
+@keyframes humanplayframeswin {
+	from {
+		left: -433px;
+	}
+	75%{
+		left: 122px;
+		transform: scaleX(-1) scaleY(1);
+	}
+	to {
+		left: 263;
+		transform: scaleX(-1.2) scaleY(1.2); 
+	}
+}
+
+#humanplay {
+	position: absolute;
+	width: 433px;
+	height: 400px;
+	background-size: 433px 400px;
+	top: 60px;
+	left: -433px;
+	transform: scaleX(-1);
+}
+
+#humanplay.rock.win, #humanplay.paper.win, #humanplay.scissors.win {
+	animation-name: humanplayframeswin;
+}
+
+#humanplay.rock.lose, #humanplay.paper.lose, #humanplay.scissors.lose,
+#humanplay.rock.tie, #humanplay.paper.tie, #humanplay.scissors.tie {
+	animation-name: humanplayframestielose;
+}
+
+#humanplay.rock, #humanplay.paper, #humanplay.scissors {
+	animation-duration: 1.5s;
+	animation-timing-function: ease-in;
+	animation-fill-mode: forwards;
+}
+
+#playbutton {
+	font-family: 'Press Start 2P';
+	font-size: 55px;
+	background: transparent;
+	margin: 150px auto 0px auto;
+	display: block;
+	text-shadow: 4px 4px lightgrey;
+	border: none;
+}
+
+#playbutton:active{
+	color: black;
+	text-shadow: none; 
+	position: relative;
+	top: 3px;
+	left: 3px;
+}
+
+#playbutton:disabled{
+	display: none;
+}
+
+#rockbutton, #paperbutton, #scissorsbutton {
+	position: absolute;
+	top: 375px;
+	background-color: transparent;
+	border: none;
+	width: 217px;
+	height: 200px;
+	background-size: 217px 200px;
+	opacity: .8;
+	transition: transform .5s ease-out;
+	transform: scaleX(-1)
+}
+
+#rockbutton:disabled, #paperbutton:disabled, #scissorsbutton:disabled{
+	opacity: .3;
+}
+
+#rockbutton:active, #paperbutton:active, #scissorsbutton:active{
+	opacity: 1;
+	transform: scaleX(-1.2) scaleY(1.2);
+}
+
+#rockbutton{
+	left: 155px;
+	background-image: url("images/rock.png")
+}
+
+#paperbutton{
+	left: 432px;
+	background-image: url("images/paper.png");
+}
+
+#scissorsbutton{
+	right: 160px;
+	background-image: url("images/scissors.png");
 }
 
 button.played {

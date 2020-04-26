@@ -8,10 +8,12 @@ var computerscore = 0
 
 var humanscore = 0
 
+var gamemode = Math.floor(Math.random() * 2); //0 = random, 1 = smart
+
 // start, countdown 3, countdown 2, countdown 1, play, score, finish 
 
 function render(){
-	document.getElementById('playbutton').disabled = state != "start" && state != "finish";
+	document.getElementById('playbutton').disabled = state != "start";
 
 	//countdown
 	if (state == "countdown 3") {
@@ -24,7 +26,7 @@ function render(){
 		document.getElementById('countdown').innerHTML = "1";
 	}
 	else if (state == "play") {
-		document.getElementById('countdown').innerHTML = "go";
+		document.getElementById('countdown').innerHTML = "GO";
 	}
 	else {
 		document.getElementById('countdown').innerHTML = "";
@@ -57,12 +59,30 @@ function render(){
 	
 
 	if (state == "score"){
-		 document.getElementById('compplay').innerHTML = computer[computer.length - 1];
+		var humanwin = winnerwinnerchickendinner(human[human.length - 1], computer[computer.length - 1]);
+
+		var compclass = computer[computer.length - 1];
+
+		var humanclass = human[human.length - 1];
+
+		if (compclass == humanclass) {
+			compclass += " tie";
+			humanclass += " tie";
+		} else if (winnerwinnerchickendinner(humanclass, compclass)) {
+			compclass += " lose";
+			humanclass += " win";
+		} else {
+			compclass += " win";
+			humanclass += " lose";
+		}
+
+		document.getElementById("compplay").className = compclass;
+		document.getElementById("humanplay").className = humanclass;
+	} else {
+		document.getElementById("compplay").className = "";
+		document.getElementById("humanplay").className = "";
 	}
-	else {
-		document.getElementById('compplay').innerHTML = "";
-	}
-	
+
 	//colculate sore
 	humanscore = 0;
 
@@ -87,7 +107,7 @@ function render(){
 			document.getElementById("endgame").innerHTML = "You Win!"
 		}
 		else {
-			document.getElementById("endgame").innerHTML = "Yout Lose!"
+			document.getElementById("endgame").innerHTML = "You Lose!"
 		}
 	}
 	else {
@@ -137,12 +157,17 @@ function playsumthin(which){
 	compplay();
 	state = "score";
 	render();
-	setTimeout(next, 1000);
+	setTimeout(next, 1750);
 }
 
 function next(){
-	if (humanscore == 3 || computerscore == 3){
+	
+	if (state == "finish") {
+		state = "start";
+	}
+	else if (humanscore == 3 || computerscore == 3){
 		state = "finish";
+		setTimeout(next, 2000);
 	}
 	else{
 		state = "play";
@@ -151,8 +176,7 @@ function next(){
 }
 
 function compplay(){
-	var choice = Math.floor(Math.random() * 2);
-	if (choice == 0) compplayrand();
+	if (gamemode == 0) compplayrand();
 	else compplaysmart();
 }
 

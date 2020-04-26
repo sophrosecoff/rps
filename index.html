@@ -1,28 +1,33 @@
 <html>
 
 <head>
+	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript" src="rps.js"></script> 
 </head>
 
-<body>
-	<h1> Rock Paper Scissors </h1>
-	<div id="score">
-		you: <span id="humanscore"></span>
-		comuter: <span id="computerscore"></span>
+<body claxss=debug>
+	<div id="container">
+		<h1> Rock Paper Scissors </h1>
+		<div id="humanscorecontainer">
+			Your Score<br><span id="humanscore"></span>
+		</div>
+		<div id="compscorecontainer"> 
+			Computer Score<br><span id="computerscore"></span>
+		</div>
+		<button id="playbutton" onclick="startcountdown()">New Match</button>
+		<div id="countdown"></div>
+
+		<div id="buttons">
+			<button id="rockbutton" onclick="playsumthin('rock')" disabled="disabled"></button>
+			<button id="paperbutton" onclick="playsumthin('paper')" disabled="disabled"></button>
+			<button id="scissorsbutton" onclick="playsumthin('scissors')" disabled="disabled"></button>
+		</div>
+
+		<div id="compplay"></div>
+		<div id="humanplay"></div>
+		<div id="endgame"></div>
 	</div>
-	<button id="playbutton" onclick="startcountdown()">New Match</button>
-	<div id="countdown"></div>
-
-	<div id="buttons">
-		<button id="rockbutton" onclick="playsumthin('rock')" disabled="disabled">Rock</button>
-		<button id="paperbutton" onclick="playsumthin('paper')" disabled="disabled">Paper</button>
-		<button id="scissorsbutton" onclick="playsumthin('scissors')" disabled="disabled">Scissors</button>
-	</div>
-
-	<div id="compplay"></div>
-	<div id="endgame"></div>
-
 </body>
 
 </html>

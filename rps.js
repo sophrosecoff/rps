@@ -1,3 +1,6 @@
+let DATA_URL = "https://script.google.com/macros/s/AKfycbzImpR8vJ8XoyMdr3VYU2ilovL3Apd-EFfw_2XbGPRll3AMpIuG/exec"
+let DEBUG = window.location.search == "?debug";
+
 var human = []
 
 var computer = []
@@ -26,7 +29,7 @@ function render(){
 		document.getElementById('countdown').innerHTML = "1";
 	}
 	else if (state == "play") {
-		document.getElementById('countdown').innerHTML = "GO";
+		document.getElementById('countdown').innerHTML ="GO";
 	}
 	else {
 		document.getElementById('countdown').innerHTML = "";
@@ -113,6 +116,16 @@ function render(){
 	else {
 		document.getElementById("endgame").innerHTML = ""
 	}
+	if (DEBUG){
+		console.log({
+            "human": human,
+            "computer": computer,
+            "state": state,
+            "computerscore": computerscore,
+            "humanscore": humanscore,
+            "gamemode": gamemode
+		});
+	}
 }
 
 function winnerwinnerchickendinner(human, computer){
@@ -164,15 +177,27 @@ function next(){
 	
 	if (state == "finish") {
 		state = "start";
+		gamemode = Math.floor(Math.random() * 2);
 	}
 	else if (humanscore == 3 || computerscore == 3){
 		state = "finish";
+		saveData();
 		setTimeout(next, 2000);
 	}
 	else{
 		state = "play";
 	}
 	render(); 
+}
+
+function saveData(){
+	if (!DEBUG) {
+		fetch(DATA_URL + 
+			"?Game%20Mode=" + (gamemode == 0? "random": "smart") +
+			"&Winner=" + (humanscore > computerscore?"human": "computer") + 
+			"&Computer%20Plays=" + computer + 
+			"&Human%20Plays=" + human);
+	}
 }
 
 function compplay(){

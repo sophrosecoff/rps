@@ -2,6 +2,7 @@ body {
 	font-family: 'Press Start 2P';
 	margin: 0;
 	padding: 0;
+	min-width: 1180px;
 }
 
 #container {
@@ -222,8 +223,10 @@ h1{
 	transform: scaleX(-1)
 }
 
-#rockbutton:disabled, #paperbutton:disabled, #scissorsbutton:disabled{
+#rockbutton:disabled, #paperbutton:disabled, #scissorsbutton:disabled,
+#rockbutton:disabled:active, #paperbutton:disabled:active, #scissorsbutton:disabled:active{
 	opacity: .3;
+	transform: scaleX(-1) scaleY(1);
 }
 
 #rockbutton:active, #paperbutton:active, #scissorsbutton:active{

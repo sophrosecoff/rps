@@ -89,7 +89,7 @@ function render(){
 		document.getElementById("humanplay").className = "";
 	}
 
-	//colculate sore
+	//calculate sore
 	humanscore = 0;
 
 	computerscore = 0;
@@ -105,8 +105,10 @@ function render(){
 		}
 		
 	}
-	document.getElementById("computerscore").innerHTML = computerscore;
-	document.getElementById("humanscore").innerHTML = humanscore;
+	if (state != "score") {
+		document.getElementById("computerscore").innerHTML = computerscore;
+		document.getElementById("humanscore").innerHTML = humanscore;
+	}
 
 	if (state == "finish"){
 		if (humanscore > computerscore){

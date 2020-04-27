@@ -196,6 +196,9 @@ h1{
 	display: block;
 	text-shadow: 4px 4px lightgrey;
 	border: none;
+	line-height: 2.25ex;
+	position: relative;
+	top: -30px;
 }
 
 #playbutton:active{

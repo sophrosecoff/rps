@@ -1,9 +1,12 @@
 let DATA_URL = "https://script.google.com/macros/s/AKfycbzImpR8vJ8XoyMdr3VYU2ilovL3Apd-EFfw_2XbGPRll3AMpIuG/exec"
+
 let DEBUG = window.location.search == "?debug";
 
 var human = []
 
 var computer = []
+
+var decision = []
 
 var state = "start"
 
@@ -117,13 +120,13 @@ function render(){
 		document.getElementById("endgame").innerHTML = ""
 	}
 	if (DEBUG){
+		console.log("gamemode", gamemode);
 		console.log({
             "human": human,
             "computer": computer,
             "state": state,
             "computerscore": computerscore,
-            "humanscore": humanscore,
-            "gamemode": gamemode
+            "humanscore": humanscore
 		});
 	}
 }
@@ -196,7 +199,8 @@ function saveData(){
 			"?Game%20Mode=" + (gamemode == 0? "random": "smart") +
 			"&Winner=" + (humanscore > computerscore?"human": "computer") + 
 			"&Computer%20Plays=" + computer + 
-			"&Human%20Plays=" + human);
+			"&Human%20Plays=" + human + 
+			"&Decisions=" + decision);
 	}
 }
 
@@ -213,49 +217,55 @@ function compplayrand(){
 }
 
 function compplaysmart(){
+
+	var humanplay = human.length>1? human[human.length-2]: null;
+
+	var computerplay = computer.length>0? computer[computer.length-1]: null;
+
+	var humanpreviousplay = human.length>2? human[human.length-3]: null;
+
 //if they play the same thing twice then play what looses to that 
-	//example: if they play scissors twice (regardless of winning or loosing) they are likely to switch plays so your safest pay is paper becuase it beats rock and ties with paper.
-	if (human.length >= 3 && human[human.length - 2] == human[human.length - 3]){
-		if (human[human.length -2] == "rock"){
+	//example: if they play scissors twice (regardless of winning or loosing) they are likely to switch plays so your safest play is paper becuase it beats rock and ties with paper.
+	if (human.length >= 3 && humanplay == humanpreviousplay){
+		if (humanplay == "rock"){
 			computer.push("scissors")
 		}
-		else if (human[human.length - 2] == "paper"){
+		else if (humanplay == "paper"){
 			computer.push("rock")
 		}
 		else {
 			computer.push("paper")
 		}
+		decision.push("Two In A Row");
 	}
 
 //if a player wins computer should play the move that beats that play in the next round
 	//example: if the player wins with scissors they are likely to repeat that move so computer should play rock on the next round
-	else if (winnerwinnerchickendinner(human[human.length - 2], computer[computer.length - 1]) == false){
-		if (human[human.length - 2] == "rock"){
+ 	else if (winnerwinnerchickendinner(humanplay, computerplay)){
+		if (humanplay == "rock"){
 			computer.push("paper")
 		}
-		else if (human[human.lenght - 2] == "paper"){
+		else if (humanplay == "paper"){
 			computer.push("scissors")
 		}
 		else {
 			computer.push("rock")
 		}
+		decision.push("Human Won");
 	}
+
 
 //if the palyer looses they will switch to a move that beats the computer's previous move so play a move that beats that (they players previous move)
-	//example: if the player plays scissors and looses to the computer's rock the player will likely switch to paper because it beats rock so they computer should play scissors.
-	else if (winnerwinnerchickendinner(human[human.length - 2], computer[computer.lenght - 1]) == true){
-		if (human[human.lenght - 2] == "rock"){
-			computer.push("rock")
-		}
-		else if (human[human.lenght - 2] == "paper"){
-			computer.push("paper")
-		}
-		else { 
-			computer.push("scissors")
-		}
+	//example: if the player plays scissors and looses to the computer's rock the player will likely switch to paper because it beats rock so the computer should play scissors.
+	else if (winnerwinnerchickendinner(computerplay, humanplay)){
+		computer.push(humanplay);
+		decision.push("Computer Won");
 	}
 
-	else compplayrand(); 
+	else {
+		compplayrand(); 
+		decision.push("Random");
+	}
 
 }
 

@@ -16,6 +16,8 @@ var humanscore = 0
 
 var gamemode = Math.floor(Math.random() * 2); //0 = random, 1 = smart
 
+var pulsetimer = null;
+
 // start, countdown 3, countdown 2, countdown 1, play, score, finish 
 
 function render(){
@@ -152,7 +154,7 @@ function startcountdown(){
 	render()
 	setTimeout(set2, 500);
 	setTimeout(set1, 1000);
-	setTimeout(go, 1500);
+	setTimeout(next, 1500);
 }
 
 function set2(){
@@ -165,17 +167,14 @@ function set1(){
 	render();
 }
 
-function go(){
-	state = "play";
-	render();
-}
-
 function playsumthin(which){
 	human.push(which);
 	compplay();
 	state = "score";
 	render();
 	setTimeout(next, 1750);
+	clearTimeout(pulsetimer);
+	document.getElementById("buttons").className = "";
 }
 
 function next(){
@@ -191,10 +190,14 @@ function next(){
 	}
 	else{
 		state = "play";
+		pulsetimer = setTimeout(pulsebuttons, 1500);
 	}
 	render(); 
 }
 
+function pulsebuttons(){
+	document.getElementById("buttons").className = "pulse";
+}
 function saveData(){
 	if (!DEBUG) {
 		fetch(DATA_URL + 
